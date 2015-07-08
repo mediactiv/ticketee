@@ -12,6 +12,6 @@ feature 'Deleting projects' do
 
     visit '/'
 
-    expect(page).to have_on_content(@project.name)
+    expect(page).to have_no_content(@project.name)
   end
 end
