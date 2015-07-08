@@ -25,13 +25,9 @@ class ProjectsController < ApplicationController
   end
 
   def show
-    # rendered useless with set_project before_action
-    # @project = Project.find params[:id]
   end
 
   def edit
-    # rendered useless with set_project before_action
-    # @project = Project.find params[:id]
   end
 
   def update

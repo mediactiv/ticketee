@@ -18,6 +18,10 @@ class TicketsController < ApplicationController
     end
   end
 
+  def show
+
+  end
+
   private
 
   def ticket_params
