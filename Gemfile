@@ -1,6 +1,7 @@
 source 'https://rubygems.org'
 
 ruby '2.2.1'
+gem 'rack','1.6.4'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.3'
 # Use sqlite3 as the database for Active Record
@@ -49,4 +50,9 @@ end
 group :test do
   gem 'capybara', "2.1.0"
   gem 'factory_girl_rails','~> 4.2.1'
+end
+
+group :production do
+  gem 'rails_12factor'
+  gem 'pg'
 end
