@@ -1,0 +1,8 @@
+# travis-ci.org continuous integration
+language: ruby
+
+rvm:
+  - 2.2.1
+
+before_script:
+  bundle exec rake db:migrate
