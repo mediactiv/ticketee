@@ -4,17 +4,10 @@ feature 'Creating Tickets' do
   before do
     @project = FactoryGirl.create :project, name: 'Internet Explorer'
     @user= FactoryGirl.create :user
+    sign_in_as!(@user)
     visit '/'
     click_link @project.name
-    click_link "New Ticket"
-    message = 'You need to sign in or sign up before continuing.'
-    expect(page).to(have_content(message))
-    fill_in 'Name',with: user.name
-    fill_in 'Password',with: user.password
-    click_button 'Sign in'
-
-    click project.name
-    click 'New Ticket'
+    click_link 'New Ticket'
   end
 
   scenario 'Creating a ticket' do
@@ -24,7 +17,7 @@ feature 'Creating Tickets' do
 
     expect(page).to have_content('Ticket has been created.')
     within '#ticket #author' do
-      expect(page).to have_content('Created by sample@example.com')
+      expect(page).to have_content("Created by #{@user.email}")
     end
   end
 
