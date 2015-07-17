@@ -14,12 +14,18 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
-  <nav>
-    <ul>
-    <li><%= link_to "Sign up", new_user_path  %></li>
+<nav>
+  <ul>
+    <li><%= link_to "Sign up", new_user_path %></li>
     <li><%= link_to "Sign in", signin_path %></li>
+    <% if current_user %>
+        Signed in as<%= current_user.email %>
+        <% admins_only do %>
+            <%= link_to 'Admin', admin_root_path %>
+        <% end %>
+    <% end %>
   </ul>
-  </nav>
+</nav>
 <% flash.each do |key, value| %>
     <div class="flash" id='<%= key %>'>
       <%= value %>

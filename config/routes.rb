@@ -1,5 +1,9 @@
 Ticketee::Application.routes.draw do
 
+  namespace :admin do
+  get 'users/index'
+  end
+
   root "projects#index"
 
   get '/signin',to: 'sessions#new'
@@ -9,6 +13,13 @@ Ticketee::Application.routes.draw do
   
   resources :projects do
     resources :tickets
+  end
+
+  #@note @reails namespaced route
+  # controller was generated with rails g controller admin/users index
+  namespace :admin do
+    root :to =>'base#index'
+    resources :users
   end
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
