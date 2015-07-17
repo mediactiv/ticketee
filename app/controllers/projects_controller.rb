@@ -1,7 +1,8 @@
 class ProjectsController < ApplicationController
 
   before_action :set_project, only: [:show, :edit, :update, :destroy]
-
+  before_action :authorize_admin!,except: [:index,:show]
+  
   # list projects
   def index
     @projects = Project.all
