@@ -12,7 +12,6 @@ feature 'editing projects' do
   end
 
   scenario 'Updating a project' do
-
     fill_in 'Name', with: 'TextMate 2  beta'
     click_button 'Update Project'
 
