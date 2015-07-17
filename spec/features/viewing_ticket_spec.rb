@@ -3,19 +3,22 @@ feature "Viewing tickets" do
   before do
     user = FactoryGirl.create(:user)
     textmate_2 = FactoryGirl.create(:project,
-    name: "TextMate 2")
+                                    name: "TextMate 2")
     FactoryGirl.create(:ticket,
-    user:user,
-    project: textmate_2,
-    title: "Make it shiny!",
-    description: 'Gradients! Starbursts! Oh my!')
+                       user: user,
+                       project: textmate_2,
+                       title: "Make it shiny!",
+                       description: 'Gradients! Starbursts! Oh my!')
     internet_explorer = FactoryGirl.create(:project,
-    name: "Internet Explorer")
+                                           name: "Internet Explorer")
     FactoryGirl.create(:ticket,
-    user:user,
-    project: internet_explorer,
-    title: "Standards compliance",
-    description: "Isn't a joke.")
+                       user: user,
+                       project: internet_explorer,
+                       title: "Standards compliance",
+                       description: "Isn't a joke.")
+    define_permission!(user, 'view', textmate_2)
+    define_permission!(user, 'view', internet_explorer)
+    sign_in_as!(user)
     visit '/'
   end
   scenario "Viewing tickets for a given project" do

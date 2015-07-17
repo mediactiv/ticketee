@@ -4,6 +4,6 @@ module AuthorizationHelpers
   end
 end
 
-RSpec.configure.do |c|
-    c.include AuthorizationHelpers
+RSpec.configure do |c|
+    c.include(AuthorizationHelpers)
 end

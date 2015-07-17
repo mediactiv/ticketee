@@ -4,6 +4,7 @@ feature 'Creating Tickets' do
   before do
     @project = FactoryGirl.create :project, name: 'Internet Explorer'
     @user= FactoryGirl.create :user
+    define_permission!(@user,'view',@project)
     sign_in_as!(@user)
     visit '/'
     click_link @project.name

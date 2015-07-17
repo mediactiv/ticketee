@@ -6,6 +6,7 @@ feature 'Viewing projects' do
   let!(:project) { FactoryGirl.create(:project) }
 
   before do
+    define_permission!(user,'view',project)
     sign_in_as!(user)
     define_permission!(user, :view, project)
   end
