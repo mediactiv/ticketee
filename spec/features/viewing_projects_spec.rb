@@ -6,15 +6,20 @@ feature 'Viewing projects' do
   let!(:project) { FactoryGirl.create(:project) }
 
   before do
-    define_permission!(user,'view',project)
+    define_permission!(user, 'view', project)
     sign_in_as!(user)
-    define_permission!(user, :view, project)
   end
 
   scenario 'Listing all projects' do
     visit '/'
     click_link project.name
     expect(page.current_url).to eql(project_url(project))
+  end
+
+  scenario 'Not listing projects without permission' do
+    FactoryGirl.create(:project, name: 'Hidden')
+    visit '/'
+    expect(page).to_not have_content('Hidden')
   end
 
 
