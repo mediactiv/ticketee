@@ -21,9 +21,46 @@ class Admin::UsersController < Admin::BaseController
     end
   end
 
+  def show
+    @user = User.find(params[:id])
+  end
+
+  def edit
+    @user = User.find(params[:id])
+  end
+
+  def update
+    @user = User.find(params[:id])
+    if params[:user][:password].blank?
+      params[:user].delete(:password)
+      params[:user].delete(:password_confirmation)
+    end
+    if @user.update(user_params)
+      flash[:notice] = 'User has been updated.'
+      redirect_to admin_users_path
+    else
+      flash.now[:alert]="User has not been updated."
+      render :edit
+    end
+  end
+
+  def destroy
+    @user = User.find(params[:id])
+    if @user==current_user
+      flash[:alert] = 'You cannot delete yourself!'
+    else
+      @user.destroy
+      flash[:notice]='User has been deleted.'
+    end
+    redirect_to admin_users_path
+  end
+
   private
   def user_params
-    params.require(:user).permit(:name, :password, :password_confirmation)
+    params.require(:user).permit(:name, :password,
+                                 :email,
+                                 :password_confirmation,
+                                 :admin)
   end
 
 end

@@ -18,5 +18,13 @@
       <%= f.label :password %>
       <%= f.password_field :password %>
     </p>
-    <%= f.submit %>
+    <p>
+      <%= f.check_box :admin %>
+      <%= f.label :admin, 'Is an admin?' %>
+    </p>
+    <% if @user.id %>
+        <%= f.submit value: 'Update User' %>
+    <% else %>
+        <%= f.submit %>
+    <% end %>
 <% end %>
