@@ -1,16 +1,17 @@
 Ticketee::Application.routes.draw do
 
   namespace :admin do
-  get 'users/index'
+    get 'users/index'
   end
 
   root "projects#index"
 
-  get '/signin',to: 'sessions#new'
-  post 'signin',to: 'sessions#create'
+  get '/signin', to: 'sessions#new'
+  post 'signin', to: 'sessions#create'
+  delete '/signout', to: 'sessions#destroy', as: 'signout'
 
   resources :users
-  
+
   resources :projects do
     resources :tickets
   end
@@ -18,8 +19,13 @@ Ticketee::Application.routes.draw do
   #@note @reails namespaced route
   # controller was generated with rails g controller admin/users index
   namespace :admin do
-    root :to =>'base#index'
-    resources :users
+    root :to => 'base#index'
+    resources :users do
+      resources :permissions
+
+      put 'permissions', to: 'permissions#set',
+          as: 'set_permissions'
+    end
   end
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
