@@ -1,6 +1,8 @@
 class User < ActiveRecord::Base
 
 
+  has_many :permissions
+
   has_secure_password
 
   validates :email, presence: true
