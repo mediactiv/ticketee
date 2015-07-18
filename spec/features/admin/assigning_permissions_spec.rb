@@ -64,5 +64,5 @@ feature 'Assigning permissions' do
     click_link "Delete Ticket"
     expect(page).to have_content("Ticket has been deleted.")
   end
-  
+
 end
