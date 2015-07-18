@@ -12,4 +12,11 @@ module TicketsConcern
       redirect_to @project
     end
   end
+
+  def authorize_delete!
+    if !current_user.admin? && cannot?('delete tickets'.to_sym,@project)
+      flash[:alert]='You cannot delete tickets on from this project.'
+      redirect_to @project
+    end
+  end
 end
