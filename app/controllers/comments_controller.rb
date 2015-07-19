@@ -4,6 +4,7 @@ class CommentsController < ApplicationController
 
   def create
     @comment = @ticket.comments.build(comment_params)
+    @states = State.all
     @comment.user= current_user
     if @comment.save
       flash[:notice] = 'Comment has been created.'
@@ -15,7 +16,7 @@ class CommentsController < ApplicationController
   end
 
   def comment_params
-    params.require(:comment).permit(:text)
+    params.require(:comment).permit(:text,:state_id)
   end
 
   private

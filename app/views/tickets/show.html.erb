@@ -1,6 +1,7 @@
 <div id="ticket">
   <h2><%= @ticket.title %></h2>
   <span id="author">Created by <%= @ticket.user.email %></span>
+  <%= render @ticket.state if @ticket.state %>
   <%= simple_format(@ticket.description) %>
   <% authorized?('edit tickets', @project) do %>
       <%= link_to 'Edit Ticket', [:edit, @project, @ticket] %>
