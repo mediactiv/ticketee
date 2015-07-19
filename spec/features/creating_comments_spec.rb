@@ -4,7 +4,7 @@ feature 'Creating comments' do
   let!(:user) { FactoryGirl.create(:user) }
   let!(:project) { FactoryGirl.create(:project) }
   let!(:ticket) { FactoryGirl.create(:ticket, project: project, user: user) }
-  let!(:state){FactoryGirl.create(:state,name:'Open')}
+  let!(:state) { FactoryGirl.create(:state, name: 'Open') }
   before do
     define_permission!(user, 'view', project)
     sign_in_as!(user)
@@ -37,6 +37,9 @@ feature 'Creating comments' do
     expect(page).to have_content('Comment has been created.')
     within('#ticket .state') do
       expect(page).to have_content('Open')
+    end
+    within('#comments') do
+      expect(page).to have_content('State: Open')
     end
   end
 end

@@ -11,15 +11,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150719161535) do
+ActiveRecord::Schema.define(version: 20150719232717) do
 
   create_table "comments", force: :cascade do |t|
     t.text     "text"
     t.integer  "ticket_id"
     t.integer  "user_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.integer  "state_id"
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
+    t.integer  "state_id",          null: false
+    t.integer  "previous_state_id"
   end
 
   add_index "comments", ["ticket_id"], name: "index_comments_on_ticket_id"
