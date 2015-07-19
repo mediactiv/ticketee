@@ -16,6 +16,10 @@ Ticketee::Application.routes.draw do
     resources :tickets
   end
 
+  resources :tickets do
+    resources :comments
+  end
+
   #@note @reails namespaced route
   # controller was generated with rails g controller admin/users index
   namespace :admin do

@@ -2,6 +2,7 @@ class User < ActiveRecord::Base
 
 
   has_many :permissions
+  has_many :comments
 
   has_secure_password
 
