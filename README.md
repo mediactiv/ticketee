@@ -4,6 +4,10 @@ note:
 
 @TODO do chapiter 9 on upload
 
+- chapiter 10 was unfinished
+
+@TODO finish chapiter 10 (10.7 managing states)
+
 
 
 
