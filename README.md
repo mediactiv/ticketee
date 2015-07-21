@@ -6,7 +6,7 @@ note:
 
 - chapiter 10 was unfinished
 
-@TODO finish chapiter 10 (10.7 managing states)
+@TODO finish chapiter 10 (10.7 managing states)+
 
 
 

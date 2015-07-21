@@ -1,10 +1,10 @@
 Ticketee::Application.routes.draw do
 
+  root "projects#index"
+
   namespace :admin do
     get 'users/index'
   end
-
-  root "projects#index"
 
   get '/signin', to: 'sessions#new'
   post 'signin', to: 'sessions#create'
@@ -31,6 +31,16 @@ Ticketee::Application.routes.draw do
           as: 'set_permissions'
     end
   end
+
+  # app api
+  namespace :api do
+    namespace :v1 do
+      resources :projects
+    end
+  end
+
+  # devise_for :users
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
