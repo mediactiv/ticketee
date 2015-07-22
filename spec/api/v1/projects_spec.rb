@@ -8,7 +8,7 @@ describe '/api/v1/projects', type: :api do
   let!(:user) { FactoryGirl.create(:user) }
   let!(:token) { user.authentication_token }
   let!(:project) { FactoryGirl.create(:project) }
-
+  let!(:unauthorized_project) { FactoryGirl.create(:project, name: 'Unauthorized') }
   before do
     user.permissions.create!(action: 'view', thing: project)
     FactoryGirl.create(:project, name: 'Access Denied')
@@ -28,14 +28,30 @@ describe '/api/v1/projects', type: :api do
       expect(last_response.body).to eql(project.to_json)
     end
 
-    it "unsuccessful JSON" do
+    it 'unsuccessful JSON' do
       post "#{url}.json", :token => token,
-           :project => {name:''}
+           :project => {name: ''}
       last_response.status.should eql(422)
       errors = {errors: {
           name: ["can't be blank"]
       }}.to_json
       last_response.body.should eql(errors)
+    end
+  end
+
+  context 'one project viewable by this user ' do
+    it '200' do
+      get api_v1_project_url(project), token: token, format: :json
+      expect(last_response.status).to eql(200)
+    end
+  end
+
+  context 'one project not viewable by this user' do
+    it '404' do
+      get api_v1_project_url(unauthorized_project), token: token, format: :json
+      expect(last_response.status).to eql(404)
+      puts 'last response'
+      puts last_response.body
     end
   end
 
