@@ -1,7 +1,7 @@
 class Api::V1::ProjectsController < Api::V1::BaseController
 
   before_action :authorize_admin, except: [:index, :show]
-  before_action :find_project ,only:[:show]
+  before_action :find_project ,only:[:show,:update,:destroy]
 
   def index
     respond_with Project.for(current_user).all
@@ -9,6 +9,16 @@ class Api::V1::ProjectsController < Api::V1::BaseController
 
   def show
     respond_with @project
+  end
+
+  def update
+    @project.update_attributes(project_params)
+    respond_with(@project)
+  end
+
+  def destroy
+    @project.destroy
+    respond_with(@project)
   end
 
 

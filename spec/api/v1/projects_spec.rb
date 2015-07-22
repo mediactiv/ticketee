@@ -42,6 +42,35 @@ describe '/api/v1/projects', type: :api do
     end
   end
 
+  context 'updating a project' do
+    before do
+      user.admin = true
+      user.save
+    end
+    let(:url){api_v1_project_url(project)}
+    it '200' do
+      put url,token:user.authentication_token,project:{
+        name:'Updated name'
+      }
+      expect(last_response.status).to eql(204)
+      expect(last_response.body).to eql('')
+      project.reload
+      expect(project.name).to eql('Updated name')
+    end
+  end
+
+  context 'deleting a project' do
+    before do
+      user.admin = true
+      user.save
+    end
+    it '204'do
+      delete api_v1_project_url(project),token:user.authentication_token
+      expect(last_response.status).to eql(204)
+      expect(Project.exists?(project.id)).to eql(false)
+    end
+  end
+
   context 'one project viewable by this user ' do
     it '200' do
       get api_v1_project_url(project), token: token, format: :json
