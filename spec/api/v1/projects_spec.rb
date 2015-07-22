@@ -6,6 +6,7 @@ describe '/api/v1/projects', type: :api do
 
 
   let!(:user) { FactoryGirl.create(:user) }
+  let!(:admin_user){FactoryGirl.create(:admin_user)}
   let!(:token) { user.authentication_token }
   let!(:project) { FactoryGirl.create(:project) }
   let!(:unauthorized_project) { FactoryGirl.create(:project, name: 'Unauthorized') }
@@ -15,25 +16,27 @@ describe '/api/v1/projects', type: :api do
   end
 
   context 'creating a project' do
-    let(:url) { api_v1_projects_url }
+    let(:url) { api_v1_projects_path }
 
     it 'successful JSON' do
-      post "#{url}.json", token: token, project: {
-                            name: 'Inspector'
-                        }
+
+      post api_v1_projects_path(format: :json), token: admin_user.authentication_token, project: {name: 'Inspector'}
+
+      expect(last_response.status).to eql(201)
+
       project = Project.find_by(name: 'Inspector')
       project_url = api_v1_project_path(project)
-      expect(last_response.status).to eql(201)
       expect(last_response.headers['location']).to eql(project_url)
+
       expect(last_response.body).to eql(project.to_json)
     end
 
     it 'unsuccessful JSON' do
-      post "#{url}.json", :token => token,
-           :project => {name: ''}
+      post api_v1_projects_url(format: :json), token: admin_user.authentication_token,
+      :project => {name: ''}
       last_response.status.should eql(422)
       errors = {errors: {
-          name: ["can't be blank"]
+        name: ["can't be blank"]
       }}.to_json
       last_response.body.should eql(errors)
     end
@@ -50,8 +53,6 @@ describe '/api/v1/projects', type: :api do
     it '404' do
       get api_v1_project_url(unauthorized_project), token: token, format: :json
       expect(last_response.status).to eql(404)
-      puts 'last response'
-      puts last_response.body
     end
   end
 
@@ -64,11 +65,11 @@ describe '/api/v1/projects', type: :api do
       expect(last_response.status).to eql(200)
       projects = JSON.parse(last_response.body)
       expect(projects.any? do |p|
-               p['name']===project.name
-             end).to eql(true)
+        p['name']===project.name
+      end).to eql(true)
       expect(projects.any? do |p|
-               p['name'] == 'Access Denied'
-             end).to eql(false)
+        p['name'] == 'Access Denied'
+      end).to eql(false)
     end
 
     it 'XML' do
