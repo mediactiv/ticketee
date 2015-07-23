@@ -18,13 +18,20 @@ class User < ActiveRecord::Base
   scope :admins, -> { where(admin: true) }
   scope :by_name, -> { order(:name) }
 
+  def self.reset_request_count!
+    update_all('request_count = 0')
+  end
+
   def to_s
     "#{email} (#{admin? ? 'Admin' : 'User'})"
   end
 
   before_create :ensure_authentication_token
 
+
+
   private
+
   def ensure_authentication_token
     begin
       self.authentication_token = Devise.friendly_token
