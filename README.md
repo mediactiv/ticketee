@@ -1,3 +1,8 @@
+Ticketee - Issue tracker for projects
+
+[![Build Status](https://travis-ci.org/mediactiv/ticketee.svg?branch=13-Designing-an-API)](https://travis-ci.org/mediactiv/ticketee)
+
+
 note: 
 
 - chapiter 9 was skipped
