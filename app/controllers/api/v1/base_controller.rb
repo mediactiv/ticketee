@@ -2,11 +2,12 @@ class Api::V1::BaseController < ActionController::Base
   respond_to :json, :xml
 
   before_action :authenticate_user
+  before_action :check_rate_limit
 
   attr_accessor :current_user
 
   private
-  
+
   def authenticate_user
     @current_user = User.find_by(authentication_token: params[:token])
     unless @current_user
@@ -18,5 +19,9 @@ class Api::V1::BaseController < ActionController::Base
     unless @current_user.admin?
       respond_with({error:'Unauthorized'},status: 401,location: location)
     end
+  end
+
+  def check_rate_limit
+    @current_user.increment!(:request_count)
   end
 end

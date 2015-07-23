@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150721110434) do
+ActiveRecord::Schema.define(version: 20150723091737) do
 
   create_table "comments", force: :cascade do |t|
     t.text     "text"
@@ -80,6 +80,7 @@ ActiveRecord::Schema.define(version: 20150721110434) do
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
     t.string   "authentication_token"
+    t.integer  "request_count",          default: 0
   end
 
   add_index "users", ["authentication_token"], name: "index_users_on_authentication_token", unique: true
